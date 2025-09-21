@@ -57,11 +57,11 @@ inline DBConfig loadConfig(const QString& path = "../config.json") {
 
     QJsonObject obj = doc.object();
     DBConfig cfg;
-    cfg.host = obj.value("DB_HOST").toString("127.0.0.1");
-    cfg.port = obj.value("DB_PORT").toInt(3306);
-    cfg.name = obj.value("DB_NAME").toString("bank_app");
-    cfg.user = obj.value("DB_USER").toString("bank_user");
-    cfg.pass = obj.value("DB_PASS").toString("");
+    cfg.host = obj.value("DB_HOST").toString();
+    cfg.port = obj.value("DB_PORT").toInt();
+    cfg.name = obj.value("DB_NAME").toString();
+    cfg.user = obj.value("DB_USER").toString();
+    cfg.pass = obj.value("DB_PASS").toString();
     return cfg;
 }
 
