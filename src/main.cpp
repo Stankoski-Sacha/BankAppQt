@@ -1,47 +1,48 @@
-#include <QApplication>
-#include <memory>
-#include <QHBoxLayout>
-#include <QFormLayout>
-#include <QGridLayout>
-#include <QPushButton>
-#include <QLineEdit>
+#include "../include/pch.hpp"
+#include "../include/Qt_DB_Utils.hpp"
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
-    // Window
-    auto window = std::make_unique<QWidget>();
-    window->setWindowTitle("Hello World");
-
-    // Buttons
-    auto button = std::make_unique<QPushButton>("Hello World");
-    auto button2 = std::make_unique<QPushButton>("Hello World2");
-    auto button3 = std::make_unique<QPushButton>("Hello World3");
-    auto button4 = std::make_unique<QPushButton>("Hello World4");
-    auto button5 = std::make_unique<QPushButton>("Hello World5");
-
-    auto edit = std::make_unique<QLineEdit>("Edit");
-    auto edit2 = std::make_unique<QLineEdit>("Edit2");
-    auto edit3 = std::make_unique<QLineEdit>("Edit3");
-    auto edit4 = std::make_unique<QLineEdit>("Edit4");
-    auto edit5 = std::make_unique<QLineEdit>("Edit5");
 
 
-    // Layout
-    auto layout = new QFormLayout(window.get());
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    DataBaseUtils dbUtils(db);
 
-    // Add buttons to window
-    layout->addRow(button.get(), edit.get());
-    layout->addRow(button2.get(), edit2.get());
-    layout->addRow(button3.get(), edit3.get());
-    layout->addRow(button4.get(), edit4.get());
-    layout->addRow(button5.get(), edit5.get());
+    dbUtils.openDB();
 
-    // Show the window
+    QSqlQuery query;
+    query.exec("DELETE FROM customer");
+    query.exec("DELETE FROM account");
+
+    QString name = "John";
+    QString email = "John@John.com";
+    QString passwd = "SuperStronk69420@";
+
+    dbUtils.addCustomerToDB(name, email, passwd);
+
+
+
+    auto window = std::make_unique<QMainWindow>();
+    window->setWindowTitle("Welcome");
+    window->resize(500, 700);
+
+    // Menu bar (parented to the window)
+    auto bar = std::make_unique<QMenuBar>(window.get());
+
+    // Add a menu to the bar -> returns a QMenu*
+    QMenu* fileMenu = bar->addMenu(QObject::tr("&File"));
+
+    // Add an action directly
+    QAction* openAction = fileMenu->addAction(QObject::tr("&Open"));
+
+    QObject::connect(openAction, &QAction::triggered, []() {
+        QMessageBox::information(nullptr, "Open", "Open");
+    });
+
+    window->setMenuBar(bar.get());
     window->show();
-
-    // Delete the pointer
-    delete layout;
 
     return QApplication::exec();
 }
+
