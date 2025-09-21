@@ -8,9 +8,9 @@
 
 // Qt imports
 #include <QMainWindow>
-#include <QtSql/QtSql>
 #include <QApplication>
 #include <QAction>
+#include <QtSql/QtSql>
 #include <QMenuBar>
 #include <QMessageBox>
 

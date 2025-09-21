@@ -4,8 +4,6 @@
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
-
-
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     DataBaseUtils dbUtils(db);
 

@@ -3,7 +3,6 @@
 #include <QTextBlock>
 #include <QMainWindow>
 #include <QMessageBox>
-#include <QtSql/QtSql>
 
 
 void login(QMainWindow* window, QSqlDatabase db) {
